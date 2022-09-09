@@ -25,20 +25,9 @@ const onPlay = data => {
 player.on('timeupdate', throttle(onPlay, 1000));//Слушатель раз в 1сек
 
 const getCurrentTime = Number(localStorage.getItem(CURRENT_TIME_KEY));
-// console.log(typeof getCurrentTime);
 
-player.setCurrentTime(getCurrentTime).then(function(seconds) {
-   console.log(seconds)
-}).catch(function(error) {
-    switch (error.name) {
-        case 'RangeError':
-            // the time was less than 0 or greater than the video’s duration
-            break;
-
-        default:
-            // some other error occurred
-            break;
-    }
+player.setCurrentTime(getCurrentTime).then(function (seconds) {
+    console.log(seconds)
 });
 
 
