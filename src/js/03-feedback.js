@@ -10,13 +10,15 @@ const refs = {
   textarea: document.querySelector('.feedback-form textarea'),
 };
 
-getLocalData();//вызов получения данных с хранилища
+getLocalData();
 
 refs.form.addEventListener("submit", handleSubmit);
 refs.form.addEventListener("input", throttle(saveLocalInput, 500));
 
 function handleSubmit(event) {
+
   event.preventDefault();
+
   const {
     elements: { email, message }
   } = event.currentTarget;
@@ -31,9 +33,14 @@ function handleSubmit(event) {
 
   event.currentTarget.reset();
 
-  localStorage.removeItem(FEEDBACK_FORM_STATE);
-
   console.log(userData)
+
+  removeLocalStorage()
+};
+
+function removeLocalStorage() {
+  saveLocalData = { email: '', message: '' };//Обьект по умолчанию
+  localStorage.removeItem(FEEDBACK_FORM_STATE);//Удаляем информацию с лок хранилища
 };
 
 
@@ -41,10 +48,8 @@ function saveLocalInput(event) {
 
   saveLocalData[event.target.name] = event.target.value;
   
-
   localStorage.setItem(FEEDBACK_FORM_STATE, JSON.stringify(saveLocalData));
 
-  
 };
 
 function getLocalData() {
@@ -56,6 +61,8 @@ function getLocalData() {
     refs.textarea.value = saveLocalData.message;
   }
 };
+
+
 
 
 
