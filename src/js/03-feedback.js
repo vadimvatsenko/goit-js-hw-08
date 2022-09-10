@@ -2,7 +2,7 @@ import throttle from 'lodash.throttle';
 
 const FEEDBACK_FORM_STATE = "feedback-form-state";
 
-let saveLocalData = {};//сохранить массив с данными
+let saveLocalData = {};//сохранить обьект с данными
 
 const refs = {
   form: document.querySelector('.feedback-form'),
@@ -40,19 +40,20 @@ function handleSubmit(event) {
 function saveLocalInput(event) {
 
   saveLocalData[event.target.name] = event.target.value;
+  
 
   localStorage.setItem(FEEDBACK_FORM_STATE, JSON.stringify(saveLocalData));
+
   
 };
 
 function getLocalData() {
   const getSavedData = localStorage.getItem(FEEDBACK_FORM_STATE) || "";
 
-  const writeData = JSON.parse(getSavedData);
-
-  if (writeData) {
-    refs.input.value = writeData.email;
-    refs.textarea.value = writeData.message;
+  if (getSavedData) {
+    saveLocalData = JSON.parse(getSavedData);
+    refs.input.value = saveLocalData.email;
+    refs.textarea.value = saveLocalData.message;
   }
 };
 
