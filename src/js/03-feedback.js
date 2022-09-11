@@ -10,10 +10,10 @@ const refs = {
   textarea: document.querySelector('.feedback-form textarea'),
 };
 
-getLocalData();
+getLocalStorage();
 
 refs.form.addEventListener("submit", handleSubmit);
-refs.form.addEventListener("input", throttle(saveLocalInput, 500));
+refs.form.addEventListener("input", throttle(saveLocalStorage, 500));
 
 function handleSubmit(event) {
 
@@ -33,33 +33,34 @@ function handleSubmit(event) {
 
   event.currentTarget.reset();
 
-  console.log(userData)
-
-  removeLocalStorage()
+  console.log(userData);
+  
+  removeLocalStorage();
 };
 
 function removeLocalStorage() {
   saveLocalData = { email: '', message: '' };//Обьект по умолчанию
-  localStorage.removeItem(FEEDBACK_FORM_STATE);//Удаляем информацию с лок хранилища
+  localStorage.removeItem(FEEDBACK_FORM_STATE);//Удаляем информацию из лок хранилища
 };
 
 
-function saveLocalInput(event) {
+function saveLocalStorage(event) {
+   event.preventDefault();
 
-  saveLocalData[event.target.name] = event.target.value;
+  saveLocalData[event.target.name] = event.target.value;//
   
   localStorage.setItem(FEEDBACK_FORM_STATE, JSON.stringify(saveLocalData));
 
 };
 
-function getLocalData() {
+function getLocalStorage() {
   const getSavedData = localStorage.getItem(FEEDBACK_FORM_STATE) || "";
 
   if (getSavedData) {
     saveLocalData = JSON.parse(getSavedData);
     refs.input.value = saveLocalData.email;
     refs.textarea.value = saveLocalData.message;
-  }
+  };
 };
 
 
