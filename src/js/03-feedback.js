@@ -47,7 +47,7 @@ function removeLocalStorage() {
 function saveLocalStorage(event) {
    event.preventDefault();
 
-  saveLocalData[event.target.name] = event.target.value;//
+  saveLocalData[event.target.name] = event.target.value || '';//
   
   localStorage.setItem(FEEDBACK_FORM_STATE, JSON.stringify(saveLocalData));
 
