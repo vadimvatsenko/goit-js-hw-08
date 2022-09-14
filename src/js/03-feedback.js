@@ -41,25 +41,25 @@ function handleSubmit(event) {
 function removeLocalStorage() {
   saveLocalData = { email: '', message: '' };//Обьект по умолчанию
   localStorage.removeItem(FEEDBACK_FORM_STATE);//Удаляем информацию из лок хранилища
+  console.log(saveLocalData)
+  
 };
 
-
 function saveLocalStorage(event) {
-   event.preventDefault();
+  event.preventDefault();
 
-  saveLocalData[event.target.name] = event.target.value || '';//
-  
+  saveLocalData[event.target.name] = event.target.value//
   localStorage.setItem(FEEDBACK_FORM_STATE, JSON.stringify(saveLocalData));
 
 };
 
 function getLocalStorage() {
-  const getSavedData = localStorage.getItem(FEEDBACK_FORM_STATE) || "";
+  const getSavedData = localStorage.getItem(FEEDBACK_FORM_STATE);
 
   if (getSavedData) {
     saveLocalData = JSON.parse(getSavedData);
-    refs.input.value = saveLocalData.email;
-    refs.textarea.value = saveLocalData.message;
+    refs.input.value = saveLocalData.email || '';
+    refs.textarea.value = saveLocalData.message || '';
   };
 };
 
